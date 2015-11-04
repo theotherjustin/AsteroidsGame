@@ -1,10 +1,14 @@
 SpaceShip rocket;
-Star[] nightSky = new Star[200];//your variable declarations here
+Star[] nightSky = new Star[400];//your variable declarations here
+float gravity = 1.01;
+boolean LEFTIsPressed = false;
+boolean RIGHTIsPressed = false;
+boolean UPIsPressed = false;
 public void setup() 
 {
   //your code here
   rocket = new SpaceShip();
-  size(500,500);
+  size(800,500);
   for (int i = 0; i < nightSky.length; i++)
   {
     nightSky[i] = new Star();
@@ -19,17 +23,49 @@ public void draw()
     stroke(1);
     nightSky[i].show();
   }
+  if(UPIsPressed == true)
+  {
+    rocket.accelerate(0.2);
+  }
+  if(LEFTIsPressed == true)
+  {
+    rocket.rotate(-10);
+  }
+  if(RIGHTIsPressed == true)
+  {
+    rocket.rotate(10);
+  }
   rocket.show();
   rocket.move();
 }
 public void keyPressed(){
     if (keyCode == UP) {
-      rocket.accelerate(0.2);
+      UPIsPressed = true;
+     
     }
-    else if (keyCode == DOWN){
-      rocket.accelerate(-0.2);
+    else if (keyCode == LEFT){
+      LEFTIsPressed = true;
+      
+    }
+    else if (keyCode == RIGHT){
+      RIGHTIsPressed = true;
+      
     }
   
+}
+public void keyReleased(){
+  if(keyCode == UP)
+  {
+    UPIsPressed = false;
+  }
+  else if(keyCode == LEFT)
+  {
+    LEFTIsPressed = false;
+  }
+  else if(keyCode == RIGHT)
+  {
+    RIGHTIsPressed = false;
+  }
 }
 class SpaceShip extends Floater  
 {   
@@ -56,7 +92,7 @@ class SpaceShip extends Floater
       yCorners[6] = 9;
       xCorners[7] = 0;
       yCorners[7] = 13;
-      myCenterX = 250;
+      myCenterX = 400;
       myCenterY= 250;
       myPointDirection = 0;
       myDirectionX = 0;
@@ -112,7 +148,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;     
-
+    myDirectionX = myDirectionX/gravity;
+    myDirectionY = myDirectionY/gravity;
     //wrap around screen    
     if(myCenterX >width)
     {     
@@ -155,8 +192,8 @@ class Star
   public Star()
   {
 
-    myX = (int)(Math.random()*500);
-    myY = (int)(Math.random()*500);
+    myX = (int)(Math.random()*1000);
+    myY = (int)(Math.random()*600);
   }
   public void show()
   {
