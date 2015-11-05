@@ -8,7 +8,7 @@ public void setup()
 {
   //your code here
   rocket = new SpaceShip();
-  size(800,500);
+  size(1000,650);
   for (int i = 0; i < nightSky.length; i++)
   {
     nightSky[i] = new Star();
@@ -51,10 +51,18 @@ public void keyPressed(){
       RIGHTIsPressed = true;
       
     }
+      if (keyCode == DOWN){
+      rocket.setX((int)(Math.random()*1000));
+      rocket.setY((int)(Math.random()*650));
+      rocket.setDirectionX(0);
+      rocket.setDirectionY(0);
+      rocket.setPointDirection((int)(Math.random()*360));
+    }
+
   
 }
 public void keyReleased(){
-  if(keyCode == UP)
+  if(keyCode == UP )
   {
     UPIsPressed = false;
   }
@@ -150,6 +158,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     myCenterY += myDirectionY;     
     myDirectionX = myDirectionX/gravity;
     myDirectionY = myDirectionY/gravity;
+
     //wrap around screen    
     if(myCenterX >width)
     {     
@@ -193,7 +202,7 @@ class Star
   {
 
     myX = (int)(Math.random()*1000);
-    myY = (int)(Math.random()*600);
+    myY = (int)(Math.random()*700);
   }
   public void show()
   {
