@@ -127,6 +127,7 @@ class SpaceShip extends Floater
     myCenterY += myDirectionY;     
     myDirectionX = myDirectionX/gravity;
     myDirectionY = myDirectionY/gravity;
+    
 
     //wrap around screen    
     if(myCenterX >width)
@@ -156,6 +157,7 @@ class SpaceShip extends Floater
   public double getDirectionY(){return (double)myDirectionY;}
   public void setPointDirection(int degrees){myPointDirection = degrees;}
   public double getPointDirection(){return myPointDirection;}
+
 }
 class Asteroid extends Floater 
     {
@@ -179,8 +181,8 @@ class Asteroid extends Floater
       myCenterX = (int)(Math.random()*1000);
       myCenterY= (int)(Math.random()*650);
       myPointDirection = 0;
-      myDirectionX = (int)(Math.random()*5) ;
-      myDirectionY = (int)(Math.random()*5) ;
+      myDirectionX = (int)(Math.random()*6)-3;
+      myDirectionY = (int)(Math.random()*6)-3;
       rotation = Math.random();
 
         }
@@ -194,6 +196,30 @@ class Asteroid extends Floater
   public double getDirectionY(){return (double)myDirectionY;}
   public void setPointDirection(int degrees){myPointDirection = degrees;}
   public double getPointDirection(){return myPointDirection;}
+    public void move()
+  {
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;     
+    myPointDirection += rotation;
+
+    //wrap around screen    
+    if(myCenterX >width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }  
+    } 
     }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
