@@ -1,5 +1,5 @@
 SpaceShip rocket;
-Asteroid[] rock;
+ArrayList <Asteroid> rock;
 Star[] nightSky = new Star[400];//your variable declarations here
 float gravity = 1.01;
 boolean LEFTIsPressed = false;
@@ -8,16 +8,16 @@ boolean UPIsPressed = false;
 public void setup() 
 {     
   //your code here
-  rock = new Asteroid[20];
+  rock = new ArrayList <Asteroid>();
   rocket = new SpaceShip();
   size(1000,650);
   for (int i = 0; i < nightSky.length; i++)
   {
     nightSky[i] = new Star();
   }
-   for(int i = 0; i< rock.length; i++)
+   for(int i = 0; i< 20; i++)
   {
-    rock[i] = new Asteroid();
+    rock.add(new Asteroid());
   }
 }
 public void draw() 
@@ -43,10 +43,17 @@ public void draw()
   }
   rocket.show();
   rocket.move();
-  for(int i = 0; i <rock.length; i++)
+  for(int i = 0; i <rock.size(); i++)
   {
-  rock[i].show();
-  rock[i].move();
+  rock.get(i).show();
+  rock.get(i).move();
+}
+for(int i = 0; i < rock.size(); i++)
+{
+  if(dist(rock.get(i).getX(),rock.get(i).getY(),rocket.getX(), rocket.getY())<20)
+{
+  rock.remove(i);
+}
 }
 }
 public void keyPressed(){
