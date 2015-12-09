@@ -6,11 +6,12 @@ boolean LEFTIsPressed = false;
 boolean RIGHTIsPressed = false;
 boolean UPIsPressed = false;
 public void setup() 
-{     
+{  
+size(1000,650);   
   //your code here
   rock = new ArrayList <Asteroid>();
   rocket = new SpaceShip();
-  size(1000,650);
+  
   for (int i = 0; i < nightSky.length; i++)
   {
     nightSky[i] = new Star();
@@ -31,7 +32,7 @@ public void draw()
   }
   if(UPIsPressed == true)
   {
-    rocket.accelerate(0.2);
+    rocket.accelerate(0.15);
   }
   if(LEFTIsPressed == true)
   {
