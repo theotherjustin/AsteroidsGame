@@ -1,10 +1,12 @@
 SpaceShip rocket;
 ArrayList <Asteroid> rock;
+ArrayList <Bullet> pew = new ArrayList <Bullet>();
 Star[] nightSky = new Star[400];//your variable declarations here
 float gravity = 1.01;
 boolean LEFTIsPressed = false;
 boolean RIGHTIsPressed = false;
 boolean UPIsPressed = false;
+boolean shoot = false;
 public void setup() 
 {  
 size(1000,650);   
@@ -25,6 +27,11 @@ public void draw()
 {
   //your code here
   background(0);
+  for(int i = 0; i<pew.size(); i++)
+  {
+    pew.get(i).move();
+    pew.get(i).show();
+  }
   for (int i = 0; i < nightSky.length; i++)
   {
     stroke(1);
@@ -42,6 +49,10 @@ public void draw()
   {
     rocket.rotate(10);
   }
+  if(shoot == true)
+  {
+    pew.add(new Bullet(rocket));
+  }
   rocket.show();
   rocket.move();
   for(int i = 0; i <rock.size(); i++)
@@ -51,9 +62,14 @@ public void draw()
 }
 for(int i = 0; i < rock.size(); i++)
 {
-  if(dist(rock.get(i).getX(),rock.get(i).getY(),rocket.getX(), rocket.getY())<20)
+  for(int j = 0; j<pew.size();j++)
+  {
+  if(dist(rock.get(i).getX(),rock.get(i).getY(),rocket.getX(), rocket.getY())<10)
 {
   rock.remove(i);
+  pew.remove(j);
+  break;
+}
 }
 }
 }
@@ -77,6 +93,9 @@ public void keyPressed(){
       rocket.setDirectionY(0);
       rocket.setPointDirection((int)(Math.random()*360));
     }
+    if (keyCode == ' '){
+      shoot = true;
+    }
 
   
 }
@@ -92,6 +111,9 @@ public void keyReleased(){
   else if(keyCode == RIGHT)
   {
     RIGHTIsPressed = false;
+  }
+  else if(keyCode == ' '){
+    shoot = false;
   }
 }
 class SpaceShip extends Floater  
@@ -167,6 +189,43 @@ class SpaceShip extends Floater
   public double getPointDirection(){return myPointDirection;}
 
 }
+class Bullet extends Floater
+{
+  public Bullet(SpaceShip rocket)
+  {
+    r = 150;
+    g =120;
+    b = 5;
+    myCenterX = rocket.getX();
+    myCenterY = rocket.getY();
+    myPointDirection = rocket.getPointDirection();
+    double dRadians = myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + rocket.getDirectionX();
+    myDirectionY = 5 * Math.sin(dRadians) + rocket.getDirectionY();
+  }
+
+  public void setX(int x){myCenterX = x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX = x;}
+  public double getDirectionX(){return (double)myDirectionX;}
+  public void setDirectionY(double y){myDirectionY = y;}
+  public double getDirectionY(){return (double)myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}
+  public double getPointDirection(){return myPointDirection;}
+  public void show()
+  {
+    ellipse((float)myCenterX, (float)myCenterY, 5 ,5);
+  }
+    public void move()
+    {
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
+    }
+    }
+
+
 class Asteroid extends Floater 
     {
       private double rotation;
