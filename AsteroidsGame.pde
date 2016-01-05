@@ -64,7 +64,7 @@ for(int i = 0; i < rock.size(); i++)
 {
   for(int j = 0; j<pew.size();j++)
   {
-  if(dist(rock.get(i).getX(),rock.get(i).getY(),rocket.getX(), rocket.getY())<10)
+  if(dist(rock.get(i).getX(),rock.get(i).getY(),pew.get(j).getX(), pew.get(j).getY())<10)
 {
   rock.remove(i);
   pew.remove(j);
